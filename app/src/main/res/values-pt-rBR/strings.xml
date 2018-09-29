@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="tv_price">Grafico de Preços (7d)</string>
+    <string name="tv_chan1h">"Mudou 1h: "</string>
+    <string name="tv_chan24h">"Mudou 24h: "</string>
+    <string name="tv_cha7d">"Mudou 7d: "</string>
+</resources>
