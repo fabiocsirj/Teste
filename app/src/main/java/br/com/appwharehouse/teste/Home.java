@@ -5,7 +5,6 @@ import android.app.FragmentTransaction;
 import android.content.res.Configuration;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 public class Home extends AppCompatActivity implements Fragment1.OnSelectedItem {
