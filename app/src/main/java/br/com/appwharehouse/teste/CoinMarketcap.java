@@ -30,7 +30,7 @@ public abstract class CoinMarketcap {
                 Scanner s = new Scanner(conn.getInputStream());
                 while (s.hasNext()) resp.append(s.nextLine());
                 resp = new StringBuilder(resp.toString().trim());
-//                Log.i("Teste", resp.toString());
+                Log.i("CoinMarketcap: ", resp.toString());
                 json = new JSONObject(resp.toString());
             }
         } catch (IOException | JSONException e) {

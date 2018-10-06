@@ -5,11 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Environment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
+import java.io.File;
 import java.io.FileOutputStream;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -42,23 +40,17 @@ public abstract class ImagesOff {
         return bMap;
     }
 
-    private static void deleteBitmap(Context context, String fileName) {
-        java.io.File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        java.io.File file = new java.io.File(dir, fileName);
-
-        if (file.exists()) file.delete();
-    }
-
-    public static void clearGraph(Context context, JSONArray coins) {
-        for(int i=0; i<coins.length(); i++) {
-            try {
-                int id = ((JSONObject)coins.get(i)).getInt("id");
-                String fileName = "graph_" + String.valueOf(id) + ".png";
-                deleteBitmap(context, fileName);
-            } catch (JSONException e) {
-                e.printStackTrace();
+    public static void clearGraph(Context context) {
+        File dir = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        FilenameFilter filter = new FilenameFilter() {
+            @Override
+            public boolean accept(File file, String s) {
+                return s.startsWith("graph_");
             }
+        };
+        File[] files = dir.listFiles(filter);
+        for(File file: files) {
+            file.delete();
         }
     }
-
 }
