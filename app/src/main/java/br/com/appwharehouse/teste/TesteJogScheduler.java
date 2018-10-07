@@ -9,22 +9,36 @@ import android.util.Log;
 import static android.content.Context.JOB_SCHEDULER_SERVICE;
 
 public abstract class TesteJogScheduler {
-
-        public static void start(Context context) {
-        ComponentName componentName = new ComponentName(context, TesteJobService.class);
-        JobInfo jobInfo = new JobInfo.Builder(80, componentName)
-                .setPeriodic(15 * 60 * 1000)
-                .setRequiresCharging(false)
-                .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
-                .build();
-        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
-        assert jobScheduler != null;
-        int resultCode = jobScheduler.schedule(jobInfo);
-        if (resultCode == JobScheduler.RESULT_SUCCESS) {
-            Log.i("Teste", "Job agendado...");
-        } else {
-            Log.i("Teste", "Agendamento do Job FALHOU!");
-        }
+    public static void start(Context context) {
+        if (!isJobServiceOn(context)) {
+            ComponentName componentName = new ComponentName(context, TesteJobService.class);
+            JobInfo jobInfo = new JobInfo.Builder(80, componentName)
+                    .setPeriodic(15 * 60 * 1000)
+                    .setRequiresCharging(false)
+                    .setRequiredNetworkType(JobInfo.NETWORK_TYPE_ANY)
+                    .build();
+            JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+            assert jobScheduler != null;
+            int resultCode = jobScheduler.schedule(jobInfo);
+            if (resultCode == JobScheduler.RESULT_SUCCESS) {
+                Log.i("Teste", "Job agendado...");
+            } else {
+                Log.i("Teste", "Agendamento do Job FALHOU!");
+            }
+        } else Log.i("Teste", "Job já está rodando...");
     }
 
+    private static boolean isJobServiceOn(Context context) {
+        JobScheduler jobScheduler = (JobScheduler) context.getSystemService(JOB_SCHEDULER_SERVICE);
+        boolean jobOn = false;
+
+        for (JobInfo jobInfo: jobScheduler.getAllPendingJobs()) {
+            if (jobInfo.getId() == 80) {
+                jobOn = true;
+                break;
+            }
+        }
+
+        return jobOn;
+    }
 }

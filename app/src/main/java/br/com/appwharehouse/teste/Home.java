@@ -29,8 +29,8 @@ public class Home extends AppCompatActivity implements Fragment1.OnSelectedItem 
         if (savedInstanceState == null) {
             ImagesOff.clearGraph(this);
             Toast.makeText(this, "Download...", Toast.LENGTH_LONG).show();
-            Repository r = Repository.getInstance(); // Start the Singleton class
-            r.getTicker(getApplication());
+            Repository repository = Repository.getInstance(); // Start the Singleton class
+            repository.getTicker(getApplication());
 
             TesteJogScheduler.start(this); // Start Job in Background
         }

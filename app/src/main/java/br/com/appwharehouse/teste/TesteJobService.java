@@ -12,8 +12,8 @@ public class TesteJobService extends JobService {
         Log.i("Teste", "onStartJob()");
 //        this.jobParameters = jobParameters;
 
-        Repository r = Repository.getInstance(); // Singleton class, aqui já deve estar instanciada
-        r.getTicker(getApplication());
+        Repository repository = Repository.getInstance(); // Singleton class, aqui já deve estar instanciada
+        repository.getTicker(getApplication());
 
         return true;
     }
